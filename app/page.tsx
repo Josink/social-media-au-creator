@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -17,8 +17,8 @@ export default function Home() {
           <div className= "flex flex-col gap-10 items-center">
               <h2>Get Started</h2>
               <div className = "flex flex-row gap-5">
-                  <a href="/SignupPage">Sign Up!</a>
-                  <a href="/LoginPage">Log In!</a>
+                  <Link href="/SignupPage">Sign Up!</Link>
+                  <Link href="/LoginPage">Log In!</Link>
                 </div>
           </div>
       </div>

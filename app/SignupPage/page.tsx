@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function SignupPage(){
     return(
     <div className = "flex min-h-screen flex-col gap-20 items-center justify-center">
@@ -14,21 +16,28 @@ export default function SignupPage(){
             />
 
             <input
-                type = "text"
+                type = "email"
                 placeholder= "Email"
                 className= "border rounded-md p-2"
             />
 
             <input
-                type = "text"
+                type = "password"
                 placeholder= "Password"
                 className= "border rounded-md p-2"
             />
+
+            <button
+                type = "submit"
+                className = "rounded bg-blue-300 p-3"
+            >
+                Sign Up!
+            </button>
         </div>
 
         <section className= "flex flex-col gap-5 items-center">
             <h4>Already have an account?</h4>
-            <a href = "/LoginPage">Log In!</a>
+            <Link href = "/LoginPage">Log In!</Link>
         </section>
 
     </div>
