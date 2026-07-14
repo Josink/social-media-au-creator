@@ -4,8 +4,7 @@ import { type NextRequest, NextResponse } from "next/server";
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY;
 
-export async function middleware(request: NextRequest){
-    // Create an unmodified response
+export async function proxy(request: NextRequest){
     let supabaseResponse = NextResponse.next({
         request: {
             headers: request.headers,
@@ -37,7 +36,6 @@ export async function middleware(request: NextRequest){
         data: { user }
     } = await supabase.auth.getUser();
 
-
     if (
         !user &&
         request.nextUrl.pathname.startsWith("/Dashboard")
@@ -50,8 +48,8 @@ export async function middleware(request: NextRequest){
     return supabaseResponse
 }
 
-// export const config = {
-//     matcher: [
-//         "/Dashboard/:path*",
-//     ],
-// };
+export const config = {
+    matcher: [
+        "/Dashboard/:path*",
+    ],
+};
