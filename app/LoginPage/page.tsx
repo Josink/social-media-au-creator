@@ -6,6 +6,7 @@ import {createClient} from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
 import Button from "@/components/Button";
+import Input from "@/components/Input";
 
 export default function LoginPage(){
     const supabase = createClient();
@@ -36,20 +37,18 @@ export default function LoginPage(){
         </section>
 
         <div className = "flex flex-col gap-10 items-center border border-black/10 dark:border-white/10 shadow-lg rounded-2xl p-10">
-            <input
-                type = "email"
+            <Input
+                type="email"
+                placeholder="Email"
                 value={email}
-                onChange={(e)=>setEmail(e.target.value)}
-                placeholder= "email"
-                className= "border rounded-md p-2"
+                onChange={(e) => setEmail(e.target.value)}
             />
 
-            <input
+            <Input
                 type = "password"
-                value={password}
-                onChange={(p)=>setPassword(p.target.value)}
-                placeholder= "Password"
-                className= "border rounded-md p-2"
+                placeholder = "Password"
+                value = {password}
+                onChange = {(p) => setPassword(p.target.value)}
             />
 
             <Button

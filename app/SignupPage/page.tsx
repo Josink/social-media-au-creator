@@ -1,17 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {createClient} from "@/lib/supabase/client";
 
 import Button from "@/components/Button";
+import Input from "@/components/Input";
+import {useSearchParams} from "next/navigation";
 
 export default function SignupPage(){
     const supabase = createClient();
 
+    const searchParams = useSearchParams();
+    const emailFromHomePage = searchParams.get("email") ?? "";
+
     const[username, setUsername] = useState("");
-    const[email, setEmail] = useState("");
+    const[email, setEmail] = useState(emailFromHomePage);
     const[password, setPassword] = useState("");
+
 
     async function handleSignup(){
         const { error } = await supabase.auth.signUp({
@@ -40,28 +46,25 @@ export default function SignupPage(){
         </section>
 
         <div className = "flex flex-col gap-10 items-center border border-black/10 dark:border-white/10 shadow-lg rounded-2xl p-10">
-            <input
-                type = "text"
+            <Input
+                type="text"
+                placeholder="Username"
                 value={username}
-                onChange={(u) => setUsername(u.target.value)}
-                placeholder= "Username"
-                className= "border rounded-md p-2"
+                onChange={(u) => setEmail(u.target.value)}
             />
 
-            <input
-                type = "email"
+            <Input
+                type="email"
+                placeholder="Email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                placeholder= "Email"
-                className= "border rounded-md p-2"
             />
 
-            <input
+            <Input
                 type = "password"
-                value={password}
-                onChange={(p) => setPassword(p.target.value)}
-                placeholder= "Password"
-                className= "border rounded-md p-2"
+                placeholder = "Password"
+                value = {password}
+                onChange = {(p) => setPassword(p.target.value)}
             />
 
             <Button

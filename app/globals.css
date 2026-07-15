@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-    --color-background: #ffffff;
-    --color-foreground: #171717;
+    --color-background: #FDF4E7;
+    --color-foreground: #432904;
 
     --color-primary: #F09516;
     --color-secondary: #F02716;
@@ -18,8 +18,10 @@
 
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
+    --font-sourgummy: var(--font-sour-gummy);
 }
 
 body {
-    @apply bg-background text-foreground font-sans;
+    @apply bg-background text-foreground;
+    font-family: var(--font-sour-gummy);
 }
