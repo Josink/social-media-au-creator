@@ -1,3 +1,5 @@
+import React from "react";
+
 type InputProps = {
     type: "text" | "email" | "password";
     placeholder: string;

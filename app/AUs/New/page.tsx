@@ -1,4 +1,5 @@
 import Button from "@/components/Button";
+import Input from "@/components/Input";
 
 export default function New() {
     return(
@@ -9,18 +10,12 @@ export default function New() {
 
             <div>
                 <h1>Title</h1>
-                <input
-                    type="text"
-                    placeholder="Title"
-                />
+                <Input type= "text" placeholder= "Title" />
             </div>
 
             <div>
                 <h1>Description</h1>
-                <input
-                    type="text"
-                    placeholder="Description"
-                />
+                <Input type= "text" placeholder= "Description" />
             </div>
 
             <Button text="Create AU" />

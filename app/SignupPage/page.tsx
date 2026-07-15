@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import {createClient} from "@/lib/supabase/client";
 
 import Button from "@/components/Button";
@@ -14,7 +14,7 @@ export default function SignupPage(){
     const searchParams = useSearchParams();
     const emailFromHomePage = searchParams.get("email") ?? "";
 
-    const[username, setUsername] = useState("");
+    const[username] = useState("");
     const[email, setEmail] = useState(emailFromHomePage);
     const[password, setPassword] = useState("");
 
@@ -39,11 +39,19 @@ export default function SignupPage(){
     }
 
     return(
-    <div className = "flex h-full flex-1 flex-col gap-20 items-center justify-center p-10">
-        <section>
-            <h4>First Time?</h4>
-            <h6>Create Your Account!</h6>
-        </section>
+    <div className = "flex h-full flex-1 flex-row gap-20 items-center justify-between p-10">
+
+        <div className = "flex flex-col gap-20">
+            <section>
+                <h4 className="text-7xl">First Time?</h4>
+                <h6 className="text-5xl">Create Your Account!</h6>
+            </section>
+
+            <section className="flex flex-col gap-5 items-center">
+                <h4>Already have an account?</h4>
+                <Link href="/LoginPage">Log In!</Link>
+            </section>
+        </div>
 
         <div className = "flex flex-col gap-10 items-center border border-black/10 dark:border-white/10 shadow-lg rounded-2xl p-10">
             <Input
@@ -72,11 +80,6 @@ export default function SignupPage(){
             onClick={handleSignup}
             />
         </div>
-
-        <section className= "flex flex-col gap-5 items-center">
-            <h4>Already have an account?</h4>
-            <Link href = "/LoginPage">Log In!</Link>
-        </section>
 
     </div>
     );
