@@ -4,6 +4,8 @@ import Link from "next/link";
 import {useState} from "react";
 import {createClient} from "@/lib/supabase/client";
 
+import Button from "@/components/Button";
+
 export default function SignupPage(){
     const supabase = createClient();
 
@@ -62,13 +64,10 @@ export default function SignupPage(){
                 className= "border rounded-md p-2"
             />
 
-            <button
-                type = "button"
-                className = "rounded bg-blue-300 p-3 hover:bg-blue-400"
-                onClick={handleSignup}
-            >
-                Sign Up!
-            </button>
+            <Button
+            text="Sign Up!"
+            onClick={handleSignup}
+            />
         </div>
 
         <section className= "flex flex-col gap-5 items-center">
