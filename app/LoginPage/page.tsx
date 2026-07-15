@@ -5,6 +5,8 @@ import {useState} from "react";
 import {createClient} from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 
+import Button from "@/components/Button";
+
 export default function LoginPage(){
     const supabase = createClient();
 
@@ -50,13 +52,10 @@ export default function LoginPage(){
                 className= "border rounded-md p-2"
             />
 
-            <button
-                type = "button"
-                className = "rounded bg-blue-300 p-3 hover:bg-blue-400"
+            <Button
+                text="Log In!"
                 onClick={handleLogin}
-            >
-                Log In!
-            </button>
+            />
 
         </div>
 
