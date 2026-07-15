@@ -32,18 +32,18 @@ export async function proxy(request: NextRequest){
         },
     );
 
-    // const {
-    //     data: { user }
-    // } = await supabase.auth.getUser();
-    //
-    // if (
-    //     !user &&
-    //     request.nextUrl.pathname.startsWith("/Dashboard")
-    // ) {
-    //     return NextResponse.redirect(
-    //         new URL("/LoginPage", request.url)
-    //     );
-    // }
+    const {
+        data: { user }
+    } = await supabase.auth.getUser();
+
+    if (
+        !user &&
+        request.nextUrl.pathname.startsWith("/Dashboard")
+    ) {
+        return NextResponse.redirect(
+            new URL("/LoginPage", request.url)
+        );
+    }
 
     return supabaseResponse
 }
