@@ -31,9 +31,9 @@ export default function LoginPage(){
     }
 
     return(
-    <div className = "flex h-full flex-1 flex-col gap-20 items-center justify-center p-10">
+    <div className = "flex h-full flex-1 flex-col gap-14 items-center justify-center p-10">
         <section>
-            <h6>Log In!</h6>
+            <h6 className= "text-4xl">Log In!</h6>
         </section>
 
         <div className = "flex flex-col gap-10 items-center border border-black/10 dark:border-white/10 shadow-lg rounded-2xl p-10">
@@ -58,10 +58,9 @@ export default function LoginPage(){
 
         </div>
 
-        <section className= "flex flex-col gap-5 items-center">
+        <section className= "flex flex-col gap-3 items-center">
             <h4>Don&#39;t have an account?</h4>
             <Link href = "/SignupPage">Sign Up!</Link>
-            <Link href = "/Dashboard">Dashboard</Link>
         </section>
         
     </div>

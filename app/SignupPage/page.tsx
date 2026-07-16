@@ -14,7 +14,7 @@ export default function SignupPage(){
     const searchParams = useSearchParams();
     const emailFromHomePage = searchParams.get("email") ?? "";
 
-    const[username] = useState("");
+    const[username, setUsername] = useState("");
     const[email, setEmail] = useState(emailFromHomePage);
     const[password, setPassword] = useState("");
 
@@ -39,7 +39,7 @@ export default function SignupPage(){
     }
 
     return(
-    <div className = "flex h-full flex-1 flex-row gap-20 items-center justify-between p-10">
+    <div className = "flex h-full flex-1 flex-row items-center p-10">
 
         <div className = "flex flex-col gap-20">
             <section>
@@ -47,38 +47,42 @@ export default function SignupPage(){
                 <h6 className="text-5xl">Create Your Account!</h6>
             </section>
 
-            <section className="flex flex-col gap-5 items-center">
+        </div>
+
+        <div className = "flex flex-col gap-18 pl-80 items-center">
+            <div
+                className="flex flex-col gap-10 items-center border border-black/10 dark:border-white/10 shadow-lg rounded-2xl p-10">
+                <Input
+                    type="text"
+                    placeholder="Username"
+                    value={username}
+                    onChange={(u) => setUsername(u.target.value)}
+                />
+
+                <Input
+                    type="email"
+                    placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                />
+
+                <Input
+                    type="password"
+                    placeholder="Password"
+                    value={password}
+                    onChange={(p) => setPassword(p.target.value)}
+                />
+
+                <Button
+                    text="Sign Up!"
+                    onClick={handleSignup}
+                />
+            </div>
+
+            <section className="flex flex-col gap-3">
                 <h4>Already have an account?</h4>
                 <Link href="/LoginPage">Log In!</Link>
             </section>
-        </div>
-
-        <div className = "flex flex-col gap-10 items-center border border-black/10 dark:border-white/10 shadow-lg rounded-2xl p-10">
-            <Input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(u) => setEmail(u.target.value)}
-            />
-
-            <Input
-                type="email"
-                placeholder="Email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-            />
-
-            <Input
-                type = "password"
-                placeholder = "Password"
-                value = {password}
-                onChange = {(p) => setPassword(p.target.value)}
-            />
-
-            <Button
-            text="Sign Up!"
-            onClick={handleSignup}
-            />
         </div>
 
     </div>

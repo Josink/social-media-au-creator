@@ -23,5 +23,5 @@
 
 body {
     @apply bg-background text-foreground;
-    font: var(--font-sour-gummy);
+    font-family: var(--font-sour-gummy);
 }
