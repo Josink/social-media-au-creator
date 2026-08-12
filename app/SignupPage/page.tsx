@@ -6,10 +6,12 @@ import {createClient} from "@/lib/supabase/client";
 
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import {useSearchParams} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
 export default function SignupPage(){
     const supabase = createClient();
+
+    const router = useRouter();
 
     const searchParams = useSearchParams();
     const emailFromHomePage = searchParams.get("email") ?? "";
@@ -20,7 +22,7 @@ export default function SignupPage(){
 
 
     async function handleSignup(){
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
             email,
             password,
             options: {
@@ -35,7 +37,22 @@ export default function SignupPage(){
             return;
         }
 
-        console.log("Account created!");
+        if (data.user) {
+            const { error: profileError } = await supabase
+                .from("profiles")
+                .insert({
+                    id: data.user.id,
+                    username: username,
+                    display_name: username,
+                });
+
+            if (profileError) {
+                console.log(profileError.message);
+                return;
+            }
+        }
+
+        router.push("/Dashboard");
     }
 
     return(

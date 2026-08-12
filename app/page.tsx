@@ -2,16 +2,28 @@
 
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
+import {createClient} from "@/lib/supabase/client";
 
 export default function Home() {
+    const supabase = createClient();
+
     const [email, setEmail] = useState("");
     const router = useRouter();
 
     function handleSignupClick() {
         router.push(`/SignupPage?email=${encodeURIComponent(email)}`);
     }
+
+    async function loadUser(){
+        const { data: { user }} = await supabase.auth.getUser();
+        if (user) router.push("/Dashboard");
+    }
+
+    useEffect(() => {
+        loadUser();
+    }, []);
 
   return (
       <div className = "flex h-full flex-col justify-center gap-20 p-10">
