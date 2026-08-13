@@ -5,9 +5,11 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
+import {useRouter} from "next/navigation";
 
 export default function NavBar() {
     const supabase = createClient();
+    const router = useRouter();
     const [user, setUser] = useState<User | null>(null);
 
     async function loadUser(){
@@ -19,13 +21,28 @@ export default function NavBar() {
         loadUser();
 
         const {data: {subscription}, } = supabase.auth.onAuthStateChange((event, session) => {
-            if (event === "SIGNED_IN") {}
+            setUser(session?.user ?? null);
         })
 
         return () => {
             subscription.unsubscribe();
         };
     }, [supabase.auth])
+
+    const [profileOpen, setProfileOpen] = useState(false);
+
+    function previewProfile(){
+        setProfileOpen(!profileOpen);
+    }
+
+    async function handleLogout(){
+        await supabase.auth.signOut();
+
+        setUser(null);
+        setProfileOpen(false);
+
+        router.push("/");
+    }
 
     return(
         <nav className = "sticky top-0 z-50 flex h-16 items-center justify-between py-10 px-5 text-lg">
@@ -48,12 +65,20 @@ export default function NavBar() {
                     </>
                 )}
 
-                <svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
-                    <circle r="20" cx="50" cy="50" className="fill-secondary"/>
-                    <text x="50" y="50" textAnchor="middle" dominantBaseline="middle"
-                          className="fill-white font-bold text-lg">P
-                    </text>
-                </svg>
+                {user && (
+                    <button className = "hover:text-accent" onClick={previewProfile}>P</button>
+
+                )}
+
+                {user && profileOpen && (
+                    <div className = "absolute right-0 top-16 w-48 bg-foreground rounded-lg shadow-lg p-2 mx-5">
+                        <div className = "flex flex-col gap-2 items-start text-background">
+                            <Link className = "hover:text-accent" href = "/Profile">Profile</Link>
+                            <Link className = "hover:text-accent" href = "/AccountSettings">Account Settings</Link>
+                            <button className = "hover:text-accent" onClick={handleLogout}>Log Out</button>
+                        </div>
+                    </div>
+                )}
             </div>
 
         </nav>

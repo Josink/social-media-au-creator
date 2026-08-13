@@ -16,9 +16,20 @@ export default function Dashboard() {
 
             const {
                 data: { user },
+                error: userError,
             } = await supabase.auth.getUser();
 
-            if (!user) return;
+            if (userError){
+                console.log(userError.message);
+                return;
+            }
+
+            if (!user){
+                console.log("User not logged in");
+                return;
+            }
+
+            console.log("Logged-in user id: ", user.id);
 
             const { data, error } = await supabase
                 .from("profiles")
@@ -27,10 +38,11 @@ export default function Dashboard() {
                 .single();
 
             if (error) {
-                console.log(error.message);
+                console.log("Profile error: ", error.message);
                 return;
             }
 
+            console.log("Profile data: ", data);
             setUsername(data.username);
         }
 
