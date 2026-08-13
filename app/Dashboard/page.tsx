@@ -13,7 +13,6 @@ export default function Dashboard() {
 
     useEffect(() => {
         async function loadProfile() {
-
             const {
                 data: { user },
                 error: userError,
@@ -38,11 +37,11 @@ export default function Dashboard() {
                 .single();
 
             if (error) {
-                console.log("Profile error: ", error.message);
+                console.log("ProfilePage error: ", error.message);
                 return;
             }
 
-            console.log("Profile data: ", data);
+            console.log("ProfilePage data: ", data);
             setUsername(data.username);
         }
 
