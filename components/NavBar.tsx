@@ -40,7 +40,7 @@ export default function NavBar() {
             .single();
 
         if (error) {
-            console.log("ProfilePage error: ", error.message);
+            console.log("AccountPage error: ", error.message);
             return;
         }
 
@@ -103,7 +103,6 @@ export default function NavBar() {
 
                 {user && (
                     <button className = "hover:text-accent" onClick={previewProfile}>P</button>
-
                 )}
 
                 {user && profileOpen && (
@@ -111,10 +110,9 @@ export default function NavBar() {
                         <div className = "flex flex-col gap-2 items-start text-background">
                             <div className = "flex flex-row gap-2 items-center">
                                 <button className = "hover:text-accent">P</button>
-                                <h2>{username || "Profile"}</h2>
+                                <h2 className = "hover:text-accent">{username || "Profile"}</h2>
                             </div>
-                            <Link className = "hover:text-accent" href = "/ProfilePage">Profile</Link>
-                            <Link className = "hover:text-accent" href = "/AccountSettings">Account Settings</Link>
+                            <Link className = "hover:text-accent" href = "/AccountPage">Account</Link>
                             <button className = "hover:text-accent" onClick={handleLogout}>Log Out</button>
                         </div>
                     </div>

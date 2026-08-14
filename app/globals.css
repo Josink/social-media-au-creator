@@ -2,7 +2,7 @@
 
 @theme {
     --color-background: #FDF4E7;
-    --color-foreground: #432904;
+    --color-foreground: #180F02;
 
     --color-primary: #F09516;
     --color-secondary: #F02716;
@@ -23,5 +23,5 @@
 
 body {
     @apply bg-background text-foreground;
-    font-family: var(--font-sour-gummy);
+    font-family: var(--font-geist-sans);
 }

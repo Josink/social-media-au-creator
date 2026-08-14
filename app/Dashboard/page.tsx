@@ -37,11 +37,11 @@ export default function Dashboard() {
                 .single();
 
             if (error) {
-                console.log("ProfilePage error: ", error.message);
+                console.log("AccountPage error: ", error.message);
                 return;
             }
 
-            console.log("ProfilePage data: ", data);
+            console.log("AccountPage data: ", data);
             setUsername(data.username);
         }
 
