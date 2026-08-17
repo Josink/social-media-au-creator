@@ -13,6 +13,7 @@ export default function NavBar() {
 
     const [user, setUser] = useState<User | null>(null);
     const [username, setUsername] = useState("");
+    const [displayName, setDisplayName] = useState("");
 
     async function loadProfile(){
         const {
@@ -28,6 +29,7 @@ export default function NavBar() {
         if (!user){
             setUser(null);
             setUsername("");
+            setDisplayName("");
             return;
         }
 
@@ -35,7 +37,7 @@ export default function NavBar() {
 
         const { data, error } = await supabase
             .from("profiles")
-            .select("username")
+            .select("username, display_name")
             .eq("id", user.id)
             .single();
 
@@ -44,7 +46,8 @@ export default function NavBar() {
             return;
         }
 
-        setUsername(data.username)
+        setUsername(data.username);
+        setDisplayName(data.display_name)
     }
 
     useEffect(() => {
@@ -57,6 +60,8 @@ export default function NavBar() {
                 loadProfile();
             } else {
                 setUser(null);
+                setUsername("");
+                setDisplayName("");
             }
         })
 
@@ -107,12 +112,22 @@ export default function NavBar() {
 
                 {user && profileOpen && (
                     <div className = "absolute right-0 top-16 w-48 bg-foreground rounded-lg shadow-lg p-2 mx-5">
+
                         <div className = "flex flex-col gap-2 items-start text-background">
+
                             <div className = "flex flex-row gap-2 items-center">
+
                                 <button className = "hover:text-accent">P</button>
-                                <h2 className = "hover:text-accent">{username || "Profile"}</h2>
+
+                                <div className = "flex flex-col gap-2 items-center">
+                                    <h2 className = "hover:text-accent">{displayName || "Display Name"}</h2>
+                                    <h2 className = "hover:text-accent">{username || "Username"}</h2>
+                                </div>
+
                             </div>
+
                             <Link className = "hover:text-accent" href = "/AccountPage">Account</Link>
+
                             <button className = "hover:text-accent" onClick={handleLogout}>Log Out</button>
                         </div>
                     </div>
