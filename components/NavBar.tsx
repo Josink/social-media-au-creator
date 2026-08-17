@@ -117,11 +117,11 @@ export default function NavBar() {
 
                             <div className = "flex flex-row gap-2 items-center">
 
-                                <button className = "hover:text-accent">P</button>
+                                <button>P</button>
 
-                                <div className = "flex flex-col gap-2 items-center">
-                                    <h2 className = "hover:text-accent">{displayName || "Display Name"}</h2>
-                                    <h2 className = "hover:text-accent">{username || "Username"}</h2>
+                                <div className = "flex flex-col items-center">
+                                    <p>{displayName || "Display Name"}</p>
+                                    <p>{username || "Username"}</p>
                                 </div>
 
                             </div>
