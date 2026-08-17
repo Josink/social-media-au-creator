@@ -33,24 +33,11 @@ export default function SignupPage(){
         });
 
         if (error) {
-            console.log(error.message);
+            console.log("Signup Error: ", error.message);
             return;
         }
 
-        if (data.user) {
-            const { error: profileError } = await supabase
-                .from("profiles")
-                .insert({
-                    id: data.user.id,
-                    username: username,
-                    display_name: username,
-                });
-
-            if (profileError) {
-                console.log(profileError.message);
-                return;
-            }
-        }
+        console.log("User created: ", data.user);
 
         router.push("/Dashboard");
     }
