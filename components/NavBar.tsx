@@ -86,7 +86,7 @@ export default function NavBar() {
     }
 
     return(
-        <nav className = "sticky top-0 z-50 flex h-16 items-center justify-between py-10 px-5 text-lg">
+        <nav className = "bg-primary sticky top-0 z-50 flex h-16 items-center justify-between py-10 px-5 text-lg">
             <div className = "gap-5 flex flex-row">
                 <Link className = "hover:text-accent"  href = "/Dashboard">
                     Social Media AU Creator
