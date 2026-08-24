@@ -8,20 +8,13 @@ import Button from "@/components/Button";
 
 export default function ProfilePage() {
     const supabase = createClient();
-    const [account, setAccount] = useState({
-        email: "",
-        username: "",
-        displayName: "",
-        avatar: "",
-        bio: "",
-        dateJoined: "",
-    })
 
     const[email, setEmail] = useState("");
     const[username, setUsername] = useState("");
     const[displayName, setDisplayName] = useState("");
     const[avatar, setAvatar] = useState("");
     const[bio, setBio] = useState("");
+    const[dateJoined, setDateJoined] = useState("");
 
     useEffect(() => {
         async function loadProfile(){
@@ -49,20 +42,12 @@ export default function ProfilePage() {
                 console.log("ProfilePage error: ", error.message);
             }
 
-            setAccount({
-                email: user.email ?? "",
-                username: profile.username ?? "",
-                displayName: profile.display_name ?? "",
-                avatar: profile.avatar_url ?? "",
-                bio: profile.bio ?? "",
-                dateJoined: profile.created_at ?? ""
-            })
-
             setEmail(user.email ?? "");
             setUsername(profile.username ?? "");
             setDisplayName(profile.displayName ?? "");
-            setAvatar(profile.avatar_url);
-            setBio(profile.bio);
+            setAvatar(profile.avatar_url ?? "");
+            setBio(profile.bio ?? "");
+            setDateJoined(profile.created_at ?? "")
         }
 
         loadProfile();
@@ -137,7 +122,7 @@ export default function ProfilePage() {
 
                         <div className="flex flex-row gap-5 items-center">
                             <p>Date Joined</p>
-                            <p>{account.dateJoined || "Date Joined"}</p>
+                            <p>{dateJoined}</p>
                         </div>
                     </div>
                 </section>
