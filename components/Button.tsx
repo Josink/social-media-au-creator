@@ -13,8 +13,7 @@ export default function Button({
         <button
             type = {type}
             onClick = {onClick}
-            className = "flex flex-col rounded bg-accent p-3 hover:bg-accent/80 justify-center items-center"
-        >
+            className = "flex flex-col rounded bg-accent p-3 hover:bg-accent/80 justify-center items-center">
             {text}
         </button>
     )
