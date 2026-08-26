@@ -14,7 +14,7 @@ export default function Input({ type, placeholder, value, onChange }: InputProps
             placeholder = {placeholder}
             value = {value}
             onChange = {onChange}
-            className = "p-2 rounded-lg outline-foreground bg-background"
+            className = "p-2 rounded-lg outline-foreground"
         />
     );
 }

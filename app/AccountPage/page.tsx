@@ -88,16 +88,16 @@ export default function ProfilePage() {
     }
 
     return(
-        <div className = "h-full flex flex-col gap-20 p-10">
+        <div className = "h-full flex flex-col gap-10 p-10">
 
             <h1 className = "text-2xl font-bold">Your Account</h1>
 
             <div className = "items-center">
 
                 <section>
-                    <div className="bg-accent flex flex-col gap-10 p-10 rounded">
+                    <div className="bg-accentbg flex flex-col gap-10 p-10 rounded">
                         <div className="flex flex-row gap-5 items-center">
-                            <p>Display Name</p>
+                            <p className = "max-w-xl">Display Name</p>
                             <Input type="text"
                                    placeholder="Display Name"
                                    value={displayName}
@@ -105,7 +105,7 @@ export default function ProfilePage() {
                         </div>
 
                         <div className="flex flex-row gap-5 items-center">
-                            <p>Username</p>
+                            <p className = "max-w-xl">Username</p>
                             <Input type="text"
                                    placeholder="Username"
                                    value={username}
@@ -113,7 +113,7 @@ export default function ProfilePage() {
                         </div>
 
                         <div className="flex flex-row gap-5 items-center">
-                            <p>Email</p>
+                            <p className = "max-w-xl">Email</p>
                             <Input type = "text"
                                    placeholder = "Email"
                                    value = {email}
@@ -121,7 +121,7 @@ export default function ProfilePage() {
                         </div>
 
                         <div className="flex flex-row gap-5 items-center">
-                            <p>Date Joined</p>
+                            <p className = "max-w-xl">Date Joined</p>
                             <p>{dateJoined}</p>
                         </div>
                     </div>
