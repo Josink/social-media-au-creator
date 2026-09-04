@@ -65,12 +65,18 @@ export default function New() {
 
                 <div>
                     <h1>Title</h1>
-                    <Input type="text" placeholder="Title"/>
+                    <Input type="text" placeholder="Title"
+                           value={title}
+                           onChange={(e) => setTitle(e.target.value)}
+                    />
                 </div>
 
                 <div>
                     <h1>Description</h1>
-                    <Input type="text" placeholder="Description"/>
+                    <Input type="text" placeholder="Description"
+                           value={description}
+                           onChange={(e) => setDescription(e.target.value)}
+                    />
                 </div>
 
                 <Button text={loading ? "Creating..." : "Create AU"}
