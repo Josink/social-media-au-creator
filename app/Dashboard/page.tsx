@@ -6,10 +6,20 @@ import Link from "next/link";
 import {useEffect, useState} from "react";
 import {createClient} from "@/lib/supabase/client";
 
+type AU = {
+    id: string;
+    title: string;
+    description: string | null;
+    created_at: string;
+};
+
 export default function Dashboard() {
 
     const supabase = createClient();
     const [username, setUsername] = useState("");
+    const [aus, setAus] = useState<AU[]>([]);
+
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         async function loadProfile() {
@@ -20,11 +30,13 @@ export default function Dashboard() {
 
             if (userError){
                 console.log(userError.message);
+                setLoading(false);
                 return;
             }
 
             if (!user){
                 console.log("User not logged in");
+                setLoading(false);
                 return;
             }
 
@@ -38,11 +50,26 @@ export default function Dashboard() {
 
             if (error) {
                 console.log("AccountPage error: ", error.message);
+                setLoading(false);
                 return;
             }
 
             console.log("AccountPage data: ", data);
             setUsername(data.username);
+
+            const { data: ausData, error: ausError } = await supabase
+                .from("aus")
+                .select("*")
+                .eq("user_id", user.id)
+                .order("created_at", { ascending: false });
+
+            if (ausError) {
+                console.log("AUs error: ", ausError.message);
+                setLoading(false);
+                return;
+            }
+            setAus(ausData);
+
         }
 
         loadProfile();
@@ -64,6 +91,23 @@ export default function Dashboard() {
                             />
                         </div>
                     </Link>
+
+                    {aus.map((au) => (
+                        <Link
+                            key={au.id}
+                            href={`/AUs/${au.id}`}
+                        >
+                            <div className="bg-primary p-5 rounded-2xl">
+
+                                <h2>{au.title}</h2>
+
+                                {au.description && (
+                                    <p>{au.description}</p>
+                                )}
+
+                            </div>
+                        </Link>
+                    ))}
                 </div>
 
             </div>

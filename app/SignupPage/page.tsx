@@ -20,8 +20,11 @@ export default function SignupPage(){
     const[email, setEmail] = useState(emailFromHomePage);
     const[password, setPassword] = useState("");
 
+    const [loading, setLoading] = useState(false);
 
     async function handleSignup(){
+        setLoading(true);
+
         const { data, error } = await supabase.auth.signUp({
             email,
             password,
@@ -34,6 +37,7 @@ export default function SignupPage(){
 
         if (error) {
             console.log("Signup Error: ", error.message);
+            setLoading(false);
             return;
         }
 
@@ -78,7 +82,7 @@ export default function SignupPage(){
                 />
 
                 <Button
-                    text="Sign Up!"
+                    text = {loading ? "Signing Up..." : "Sign Up!"}
                     onClick={handleSignup}
                 />
             </div>

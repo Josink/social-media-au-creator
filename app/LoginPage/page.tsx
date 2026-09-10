@@ -16,7 +16,11 @@ export default function LoginPage(){
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+    const [loading, setLoading] = useState(false);
+
     async function handleLogin(){
+        setLoading(true);
+
         const { error } = await supabase.auth.signInWithPassword({
             email,
             password,
@@ -24,6 +28,7 @@ export default function LoginPage(){
 
         if (error) {
             console.log(error.message);
+            setLoading(false);
             return;
         }
 
@@ -52,7 +57,7 @@ export default function LoginPage(){
             />
 
             <Button
-                text="Log In!"
+                text = {loading ? "Logging In..." : "Log In!"}
                 onClick={handleLogin}
             />
 
