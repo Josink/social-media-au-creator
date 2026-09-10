@@ -2,6 +2,7 @@
 
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import MessageBubble from "@/components/MessageBubble";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {createClient} from "@/lib/supabase/client";
@@ -28,14 +29,13 @@ export default function Home() {
   return (
       <div className = "flex h-full flex-col justify-center gap-20 p-10">
           <section className= "flex flex-col gap-5 justify-center items-start">
-              <h4 className = "text-7xl">Welcome to the</h4>
-              <h1 className = "text-8xl">Social Media AU Creator</h1>
+              <MessageBubble message="Welcome to the" messageFontSize="text-7xl"/>
+              <MessageBubble message="Social Media AU Creator" messageFontSize="text-8xl"/>
           </section>
 
           <section className= "flex flex-col gap-5 items-center text-xl">
-              <h6>This is a website that handles all the time-consuming formatting
-              for your social media AUs. You just worry about the story you&#39;re trying to
-              tell, and we&#39;ll handle the rest!</h6>
+              <MessageBubble message= "This is a website that handles all the time-consuming formatting for your social media AUs. You just worry about the story you're trying to tell, and we'll handle the rest!"
+                             messageFontSize="text-xl"/>
           </section>
 
           <div className="flex flex-row gap-5 bg-white p-2 rounded-xl items-center self-center">

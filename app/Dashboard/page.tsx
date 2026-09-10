@@ -22,7 +22,7 @@ export default function Dashboard() {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        async function loadProfile() {
+        async function loadDashboard() {
             const {
                 data: { user },
                 error: userError,
@@ -69,10 +69,10 @@ export default function Dashboard() {
                 return;
             }
             setAus(ausData);
-
+            setLoading(false);
         }
 
-        loadProfile();
+        loadDashboard();
     }, []);
 
     return(
@@ -97,7 +97,7 @@ export default function Dashboard() {
                             key={au.id}
                             href={`/AUs/${au.id}`}
                         >
-                            <div className="bg-primary p-5 rounded-2xl">
+                            <div className="flex aspect-4/5 items-center justify-center rounded-xl border-2 border-dashed">
 
                                 <h2>{au.title}</h2>
 
