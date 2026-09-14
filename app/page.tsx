@@ -3,6 +3,7 @@
 import Input from "@/components/Input";
 import Button from "@/components/Button";
 import MessageBubble from "@/components/MessageBubble";
+import TextingAnimation from "@/components/TextingAnimation";
 import {useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import {createClient} from "@/lib/supabase/client";
@@ -37,6 +38,8 @@ export default function Home() {
               <MessageBubble message= "This is a website that handles all the time-consuming formatting for your social media AUs. You just worry about the story you're trying to tell, and we'll handle the rest!"
                              messageFontSize="text-xl"/>
           </section>
+
+          <TextingAnimation from = "website"/>
 
           <div className="flex flex-row gap-5 bg-white p-2 rounded-xl items-center self-center">
               <Input placeholder="Enter your email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
