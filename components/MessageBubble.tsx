@@ -1,4 +1,5 @@
 import TextingAnimation from "@/components/TextingAnimation";
+import {useEffect, useState} from "react";
 
 type MessageBubbleProps = {
     message: string;
@@ -13,10 +14,25 @@ export default function MessageBubble({
                                           messageFontSize,
                                           from,
                                           textingDuration}:
-    MessageBubbleProps) {
+    MessageBubbleProps){
+
+    const [texting, setTexting] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setTexting(false);
+        }, textingDuration);
+
+        return () => clearTimeout(timer);
+    }, [textingDuration])
+
     return (
-        <div className = "bg-primary flex flex-col p-2 rounded-lg ">
-            <p className={messageFontSize}> {message}</p>
+        <div className = "bg-message flex flex-col p-2 rounded-lg ">
+            {texting ? (
+                <TextingAnimation from={from} />
+            ) : (
+                <p className={messageFontSize}>{message}</p>
+            )}
         </div>
     );
 }

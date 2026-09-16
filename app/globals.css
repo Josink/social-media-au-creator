@@ -10,13 +10,7 @@
 
     --color-accentbg: #F23A87;
 
-    /*--color-primary: #2E10A6;*/
-    /*--color-secondary: #103DA6;*/
-    /*--color-accent: #1088A6;*/
-
-    /*--color-primary: #8617F4;*/
-    /*--color-secondary: #F317F4;*/
-    /*--color-accent: #F41786;*/
+    --color-message: #F5B966;
 
     --font-sans: var(--font-geist-sans);
     --font-mono: var(--font-geist-mono);
