@@ -27,7 +27,7 @@ export default function MessageBubble({
     }, [textingDuration])
 
     return (
-        <div className = "bg-message flex flex-col p-2 rounded-lg ">
+        <div className = "bg-accentbg flex flex-col p-2 rounded-lg ">
             {texting ? (
                 <TextingAnimation from={from} />
             ) : (
