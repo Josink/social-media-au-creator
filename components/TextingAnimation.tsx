@@ -4,11 +4,11 @@ type TextingAnimationProps = {
 
 export default function TextingAnimation({from}: TextingAnimationProps) {
     return (
-        <div className = {from === "website" ? "flex justify-end" : "flex justify-start"}>
+        <div className = {from === "website" ? "flex justify-start" : "flex justify-end"}>
             <div className= "flex gap-2">
                 <span className = "inline-block w-2 h-2 bg-accent rounded-full opacity-40 animate-bounce"></span>
-                <span className = "inline-block w-2 h-2 bg-[#8d8c91] rounded-full opacity-40 animate-bounce [animation-delay: 150ms]"></span>
-                <span className = "inline-block w-2 h-2 bg-[#8d8c91] rounded-full opacity-40 animate-bounce [animation-delay: 300ms]"></span>
+                <span className = "inline-block w-2 h-2 bg-accent rounded-full opacity-40 animate-bounce [animation-delay: 150ms]"></span>
+                <span className = "inline-block w-2 h-2 bg-accent rounded-full opacity-40 animate-bounce [animation-delay: 300ms]"></span>
             </div>
         </div>
     );

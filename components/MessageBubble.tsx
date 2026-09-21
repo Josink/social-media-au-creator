@@ -27,12 +27,16 @@ export default function MessageBubble({
     }, [textingDuration])
 
     return (
-        <div className = "bg-accentbg flex flex-col p-2 rounded-lg ">
-            {texting ? (
-                <TextingAnimation from={from} />
+        <div className = {`flex w-full ${from === "user" ? "justify-end" : "justify-start"}`}>
+            <div className = {`flex flex-col px-4 py-2 rounded-2xl max-w-3/4 ${
+                from === "website"
+                    ? "bg-message rounded-bl-sm"
+                    : "bg-accentbg rounded-br-sm"
+            }`}>{texting ? (
+                <TextingAnimation from={from}/>
             ) : (
-                <p className={messageFontSize}>{message}</p>
-            )}
+                <p className={`${messageFontSize} leading-snug wrap-break-word`}>{message}</p>
+            )}</div>
         </div>
     );
 }

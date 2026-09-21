@@ -88,11 +88,11 @@ export default function NavBar() {
     return(
         <nav className = "bg-primary sticky top-0 z-50 flex h-16 items-center justify-between py-10 px-5 text-lg">
             <div className = "gap-5 flex flex-row">
-                <Link className = "hover:text-accent"  href = "/Dashboard">
+                <Link className = "hover:text-accent transition"  href = "/Dashboard">
                     Social Media AU Creator
                 </Link>
 
-                <Link className = "hover:text-accent" href = "https://github.com/Josink">
+                <Link className = "hover:text-accent transition" href = "https://github.com/Josink">
                     GitHub
                 </Link>
             </div>
@@ -100,14 +100,14 @@ export default function NavBar() {
             <div className = "gap-5 flex flex-row items-center">
                 {!user && (
                     <>
-                        <Link className = "hover:text-accent" href = "/LoginPage">Log In</Link>
+                        <Link className = "hover:text-accent transition" href = "/LoginPage">Log In</Link>
 
-                        <Link className = "hover:text-accent" href = "/SignupPage">Sign Up</Link>
+                        <Link className = "hover:text-accent transition" href = "/SignupPage">Sign Up</Link>
                     </>
                 )}
 
                 {user && (
-                    <button className = "hover:text-accent" onClick={previewProfile}>P</button>
+                    <button className = "hover:text-accent transition" onClick={previewProfile}>P</button>
                 )}
 
                 {user && profileOpen && (
@@ -126,9 +126,9 @@ export default function NavBar() {
 
                             </div>
 
-                            <Link className = "hover:text-accent" href = "/AccountPage">Account</Link>
+                            <Link className = "hover:text-accent transition" href = "/AccountPage">Account</Link>
 
-                            <button className = "hover:text-accent" onClick={handleLogout}>Log Out</button>
+                            <button className = "hover:text-accent transition" onClick={handleLogout}>Log Out</button>
                         </div>
                     </div>
                 )}
