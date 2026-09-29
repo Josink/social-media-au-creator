@@ -28,9 +28,13 @@ export default function Home() {
 
   return (
       <div className = "flex h-full flex-col justify-center gap-20 p-10">
-          <section className= "flex flex-col gap-5">
-              <MessageBubble message="Welcome to" messageFontSize="text-5xl" from = "website" textingDuration = {2000}/>
-              <MessageBubble message="SMAUR" messageFontSize="text-6xl" from = "website" textingDuration = {3000}/>
+
+          <section className= "flex flex-col gap-10 items-center pt-10 pb-5">
+              <div className = "flex flex-col gap-5 items-center">
+                  <h1 className="text-6xl">Social Media AU&#39;s</h1>
+                  <h1 className="text-6xl">Made Easy</h1>
+              </div>
+              <h6 className = "text-xl text-secondary/60">The solution for those who just want to create, not build.</h6>
           </section>
 
           <section className= "flex flex-col gap-5">
@@ -38,13 +42,12 @@ export default function Home() {
                              messageFontSize="text-xl" from = "website" textingDuration = {4000}/>
 
               <MessageBubble message = "Sign Up?" messageFontSize ="text-lg" from = "website" textingDuration = {5000}></MessageBubble>
+
+              <div className="flex flex-row gap-5 bg-white p-2 rounded-xl items-center self-end max-w-max">
+                  <Input placeholder="Enter your email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                  <Button text="Sign Up!" onClick={handleSignupClick}/>
+              </div>
           </section>
-
-          <div className="flex flex-row gap-5 bg-white p-2 rounded-xl items-center self-center">
-              <Input placeholder="Enter your email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-              <Button text="Sign Up!" onClick={handleSignupClick}/>
-          </div>
-
       </div>
   );
 }

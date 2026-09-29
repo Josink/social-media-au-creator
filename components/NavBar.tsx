@@ -86,10 +86,10 @@ export default function NavBar() {
     }
 
     return(
-        <nav className = "bg-primary/70 backdrop-blur-2xl  border-b border-foreground/10 sticky top-0 z-50 flex h-16 items-center justify-between py-10 px-5 text-lg">
+        <nav className = "bg-primary/70 backdrop-blur-2xl  border-b border-foreground/10 sticky top-0 z-50 flex h-16 items-center justify-between py-5 px-3 text-lg">
             <div className = "gap-5 flex flex-row">
-                <Link className = "hover:text-accent transition"  href = "/Dashboard">
-                    Social Media AU Creator
+                <Link className = "hover:text-accent transition font-bold text-2xl px-5"  href = "/Dashboard">
+                    SMAUR
                 </Link>
 
                 <Link className = "hover:text-accent transition" href = "https://github.com/Josink">
