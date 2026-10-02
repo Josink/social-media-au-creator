@@ -29,24 +29,41 @@ export default function Home() {
   return (
       <div className = "flex h-full flex-col justify-center gap-20 p-10">
 
-          <section className= "flex flex-col gap-10 items-center pt-10 pb-5">
-              <div className = "flex flex-col gap-5 items-center">
-                  <h1 className="text-6xl">Social Media AU&#39;s</h1>
-                  <h1 className="text-6xl">Made Easy</h1>
-              </div>
-              <h6 className = "text-xl text-secondary/60">The solution for those who just want to create, not build.</h6>
-          </section>
+          <section className = "flex flex-row gap-10 pt-10 pb-5">
 
-          <section className= "flex flex-col gap-5">
-              <MessageBubble message= "This is a website that handles all the time-consuming formatting for your social media AUs. You just worry about the story you're trying to tell, and we'll handle the rest!"
-                             messageFontSize="text-xl" from = "website" textingDuration = {4000}/>
+              <section className = "flex flex-col gap-20 items-end w-1/4">
+                  <section className="flex flex-col gap-5 items-center">
+                      <MessageBubble message="Create" messageFontSize="text-lg" from="user"/>
+                      <MessageBubble message="Create your online world with all your favorite characters!" messageFontSize="text-lg" from="website"/>
+                  </section>
 
-              <MessageBubble message = "Sign Up?" messageFontSize ="text-lg" from = "website" textingDuration = {5000}></MessageBubble>
+                  <section className="flex flex-col gap-5 items-center">
+                      <MessageBubble message="Customize" messageFontSize="text-lg" from="user"/>
+                      <MessageBubble message="Customize your AU! Customise characters profiles, their pages, their platforms, and more!" messageFontSize="text-lg" from="website"/>
+                  </section>
+              </section>
 
-              <div className="flex flex-row gap-5 bg-white p-2 rounded-xl items-center self-end max-w-max">
-                  <Input placeholder="Enter your email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                  <Button text="Sign Up!" onClick={handleSignupClick}/>
-              </div>
+              <section className="flex flex-col gap-20 items-center justify-center w-1/2">
+
+                  <div className = "flex flex-col gap-5">
+                      <div className="flex flex-col gap-5 items-center">
+                          <h1 className="text-6xl">Social Media AU&#39;s</h1>
+                          <h1 className="text-6xl text-accent">Made Easy</h1>
+                      </div>
+
+                      <h6 className="text-xl">The solution for those who just want to create, not build.</h6>
+                  </div>
+
+                  <div className="flex flex-row gap-5 bg-white p-2 rounded-xl items-center max-w-max">
+                      <Input placeholder="Enter your email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                      <Button text="Sign Up!" onClick={handleSignupClick}/>
+                  </div>
+              </section>
+
+              <section className = "flex flex-col gap-5 w-1/4 pt-16">
+                  <MessageBubble message="Share" messageFontSize="text-lg" from="user"/>
+                  <MessageBubble message="Share your AU with others! Whether in the form of an image or html code, we got you." messageFontSize="text-lg" from="website"/>
+              </section>
           </section>
       </div>
   );

@@ -84,10 +84,16 @@ export default function Dashboard() {
 
                 <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6 p-10">
                     <Link href="/AUs/New">
-                        <div className="flex aspect-4/5 items-center justify-center rounded-xl border-2 border-dashed">
+                        <div className="relative flex aspect-4/5 items-center justify-center">
+                            <img
+                                src="/images/phone.svg"
+                                alt="Create new AU"
+                                className="h-full w-full object-contain"
+                            />
+
                             <FontAwesomeIcon
                                 icon={faPlus}
-                                className="size-8 text-gray-400"
+                                className="absolute size-10 text-primary"
                             />
                         </div>
                     </Link>

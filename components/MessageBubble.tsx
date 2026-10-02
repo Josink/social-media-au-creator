@@ -28,15 +28,16 @@ export default function MessageBubble({
 
     return (
         <div className = {`flex w-full ${from === "user" ? "justify-end" : "justify-start"}`}>
-            <div className = {`flex flex-col px-4 py-2 rounded-2xl max-w-3/4 ${
+            <div className = {`flex flex-col px-4 py-2 rounded-2xl max-w-3/4 hover: ${
                 from === "website"
-                    ? "bg-message rounded-bl-sm"
-                    : "bg-accentbg rounded-br-sm text-background"
+                    ? "bg-message rounded-bl-sm shadow shadow-shadow"
+                    : "bg-accentbg rounded-br-sm text-background shadow shadow-shadow"
             }`}>{texting ? (
                 <TextingAnimation from={from}/>
             ) : (
                 <p className={`${messageFontSize} leading-snug wrap-break-word`}>{message}</p>
-            )}</div>
+            )}
+            </div>
         </div>
     );
 }

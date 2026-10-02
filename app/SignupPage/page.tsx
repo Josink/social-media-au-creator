@@ -59,7 +59,7 @@ export default function SignupPage(){
 
         <div className = "flex flex-col gap-18 pl-80 items-center">
             <div
-                className="flex flex-col gap-10 items-center border border-black/10 dark:border-white/10 shadow-lg rounded-2xl p-10">
+                className="flex flex-col gap-10 items-center border border-shadow/10 shadow-lg rounded-2xl p-10">
                 <Input
                     type="text"
                     placeholder="Username"

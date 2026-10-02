@@ -86,7 +86,7 @@ export default function NavBar() {
     }
 
     return(
-        <nav className = "bg-primary/70 backdrop-blur-2xl  border-b border-foreground/10 sticky top-0 z-50 flex h-16 items-center justify-between py-5 px-3 text-lg">
+        <nav className = "bg-primary/70 backdrop-blur-2xl  border-b border-foreground/10 sticky top-0 z-50 flex h-16 items-center justify-between py-5 px-3 text-lg shadow shadow-shadow">
             <div className = "gap-5 flex flex-row">
                 <Link className = "hover:text-accent transition font-bold text-2xl px-5"  href = "/Dashboard">
                     SMAUR
@@ -101,8 +101,6 @@ export default function NavBar() {
                 {!user && (
                     <>
                         <Link className = "hover:text-accent transition" href = "/LoginPage">Log In</Link>
-
-                        <Link className = "hover:text-accent transition" href = "/SignupPage">Sign Up</Link>
                     </>
                 )}
 
