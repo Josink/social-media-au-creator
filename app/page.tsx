@@ -27,23 +27,23 @@ export default function Home() {
     }, []);
 
   return (
-      <div className = "flex h-full flex-col justify-center gap-20 p-10">
+      <div className = "flex flex-1 flex-col justify-center gap-20 p-10">
 
           <section className = "flex flex-row gap-10 pt-10 pb-5">
 
-              <section className = "flex flex-col gap-20 items-end w-1/4">
+              <section className = "flex flex-col gap-20 items-end w-1/4 h-1/3">
                   <section className="flex flex-col gap-5 items-center">
                       <MessageBubble message="Create" messageFontSize="text-lg" from="user"/>
                       <MessageBubble message="Create your online world with all your favorite characters!" messageFontSize="text-lg" from="website"/>
                   </section>
 
-                  <section className="flex flex-col gap-5 items-center">
+                  <section className="flex flex-col gap-5 items-center h-1/3">
                       <MessageBubble message="Customize" messageFontSize="text-lg" from="user"/>
                       <MessageBubble message="Customize your AU! Customise characters profiles, their pages, their platforms, and more!" messageFontSize="text-lg" from="website"/>
                   </section>
               </section>
 
-              <section className="flex flex-col gap-20 items-center justify-center w-1/2">
+              <section className="flex flex-col gap-20 items-center justify-center w-1/2 h-2/3">
 
                   <div className = "flex flex-col gap-5">
                       <div className="flex flex-col gap-5 items-center">
@@ -60,7 +60,7 @@ export default function Home() {
                   </div>
               </section>
 
-              <section className = "flex flex-col gap-5 w-1/4 pt-16">
+              <section className = "flex flex-col gap-5 w-1/4 h-1/3 pt-16">
                   <MessageBubble message="Share" messageFontSize="text-lg" from="user"/>
                   <MessageBubble message="Share your AU with others! Whether in the form of an image or html code, we got you." messageFontSize="text-lg" from="website"/>
               </section>

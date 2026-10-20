@@ -2,18 +2,24 @@ import TextingAnimation from "@/components/TextingAnimation";
 import {useEffect, useState} from "react";
 
 type MessageBubbleProps = {
-    message: string;
+    children?: React.ReactNode;
+    message?: string;
     messageFontSize?: "text-xs" |"text-sm" | "text-base" | "text-lg" | "text-xl" |"text-2xl" | "text-3xl" | "text-4xl"
         | "text-5xl"| "text-6xl"| "text-7xl"| "text-8xl"| "text-9xl";
     from?: "website" | "user";
     textingDuration?: number;
+    scrollable?: boolean;
+    maxHeight?: string;
 }
 
 export default function MessageBubble({
+                                          children,
                                           message,
-                                          messageFontSize,
-                                          from,
-                                          textingDuration}:
+                                          messageFontSize = "text-base",
+                                          from = "website",
+                                          textingDuration = 0,
+                                          scrollable = false,
+                                          maxHeight}:
     MessageBubbleProps){
 
     const [texting, setTexting] = useState(true);
@@ -32,10 +38,22 @@ export default function MessageBubble({
                 from === "website"
                     ? "bg-message rounded-bl-sm shadow shadow-shadow"
                     : "bg-accentbg rounded-br-sm text-background shadow shadow-shadow"
-            }`}>{texting ? (
-                <TextingAnimation from={from}/>
-            ) : (
-                <p className={`${messageFontSize} leading-snug wrap-break-word`}>{message}</p>
+            }
+            ${
+                scrollable 
+                    ? "scrollbar-auto scrollbar-thumb-secondary scrollbar-track-accent/80 overflow-y-auto" 
+                    : ""
+            }`}
+                 style = {scrollable ? { maxHeight } : undefined}
+            >
+                {children ? (
+                    children
+                ) : texting ? (
+                    <TextingAnimation from={from}/>
+                ) : (
+                <p className={`${messageFontSize} leading-snug wrap-break-word`}>
+                    {message}
+                </p>
             )}
             </div>
         </div>

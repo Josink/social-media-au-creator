@@ -5,12 +5,13 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import {useEffect, useState} from "react";
 import {createClient} from "@/lib/supabase/client";
+import MessageBubble from "@/components/MessageBubble";
 
 type AU = {
     id: string;
     title: string;
     description: string | null;
-    created_at: string;
+    last_visited: string;
 };
 
 export default function Dashboard() {
@@ -20,6 +21,19 @@ export default function Dashboard() {
     const [aus, setAus] = useState<AU[]>([]);
 
     const [loading, setLoading] = useState(false);
+
+    async function recordLastVisited(auId: string) {
+        const {data, error} = await supabase
+            .from("aus")
+            .update({
+                last_visited: new Date().toISOString(),
+            })
+            .eq("id", auId);
+
+        if (error) {
+            console.log("recordLastVisited error:", error.message);
+        }
+    }
 
     useEffect(() => {
         async function loadDashboard() {
@@ -40,8 +54,6 @@ export default function Dashboard() {
                 return;
             }
 
-            console.log("Logged-in user id: ", user.id);
-
             const { data, error } = await supabase
                 .from("profiles")
                 .select("username")
@@ -54,14 +66,13 @@ export default function Dashboard() {
                 return;
             }
 
-            console.log("AccountPage data: ", data);
             setUsername(data.username);
 
             const { data: ausData, error: ausError } = await supabase
                 .from("aus")
                 .select("*")
                 .eq("user_id", user.id)
-                .order("created_at", { ascending: false });
+                .order("last_visited", { ascending: false });
 
             if (ausError) {
                 console.log("AUs error: ", ausError.message);
@@ -77,13 +88,15 @@ export default function Dashboard() {
 
     return(
         <div className = "flex h-full flex-1 flex-col gap-20 p-10">
-            <div>
-                <h2>Welcome, {username}</h2>
+            <MessageBubble message = {`Hello, ${username}!`} messageFontSize="text-xl" from = "website"/>
 
-                <h2>Your AUs</h2>
+            <MessageBubble from = "user" scrollable={ true} maxHeight="50dvh">
+                <h2 className="flex text-5xl p-10 self-center">
+                    Your AUs
+                </h2>
 
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-6 p-10">
-                    <Link href="/AUs/New">
+                <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 p-10">
+                    <Link href="/AUs/New" className = "transition-transform duration-200 hover:translate-y-2">
                         <div className="relative flex aspect-4/5 items-center justify-center">
                             <img
                                 src="/images/phone.svg"
@@ -93,7 +106,8 @@ export default function Dashboard() {
 
                             <FontAwesomeIcon
                                 icon={faPlus}
-                                className="absolute size-10 text-primary"
+                                className="absolute size-10 text-accent"
+                                size = "2xl"
                             />
                         </div>
                     </Link>
@@ -102,21 +116,37 @@ export default function Dashboard() {
                         <Link
                             key={au.id}
                             href={`/AUs/${au.id}`}
-                        >
-                            <div className="flex aspect-4/5 items-center justify-center rounded-xl border-2 border-dashed">
+                        className = "transition-transform duration-200 hover:translate-y-2"
+                        onClick={() => recordLastVisited(au.id)}>
 
-                                <h2>{au.title}</h2>
+                            <div className="relative flex aspect-4/5 justify-center">
+                                <img
+                                    src="/images/phone.svg"
+                                    alt="Create new AU"
+                                    className="h-full w-full object-contain"
+                                />
 
-                                {au.description && (
-                                    <p>{au.description}</p>
-                                )}
+                                <div className = "absolute flex flex-col items-center">
+                                    <p className = "mt-10 text-accent font-bold">{au.title}</p>
+
+                                    {au.description && (
+                                        <p>{au.description}</p>
+                                    )}
+
+                                    <p className = "text-xs">
+                                        {new Date(au.last_visited).toLocaleDateString("en-US", {
+                                            month: "long",
+                                            day: "numeric",
+                                        })}
+                                    </p>
+                                </div>
 
                             </div>
                         </Link>
                     ))}
                 </div>
 
-            </div>
+            </MessageBubble>
         </div>
     );
 }
