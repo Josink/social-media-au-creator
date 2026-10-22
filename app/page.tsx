@@ -33,13 +33,13 @@ export default function Home() {
 
               <section className = "flex flex-col gap-20 items-end w-1/4 h-1/3">
                   <section className="flex flex-col gap-5 items-center">
-                      <MessageBubble message="Create" messageFontSize="text-lg" from="user"/>
-                      <MessageBubble message="Create your online world with all your favorite characters!" messageFontSize="text-lg" from="website"/>
+                      <MessageBubble message="Create" messageFontSize="text-xl" from="user"/>
+                      <MessageBubble message="Create your online world with all your favorite characters!" messageFontSize="text-xl" from="website"/>
                   </section>
 
                   <section className="flex flex-col gap-5 items-center h-1/3">
-                      <MessageBubble message="Customize" messageFontSize="text-lg" from="user"/>
-                      <MessageBubble message="Customize your AU! Customise characters profiles, their pages, their platforms, and more!" messageFontSize="text-lg" from="website"/>
+                      <MessageBubble message="Customize" messageFontSize="text-xl" from="user"/>
+                      <MessageBubble message="Customize your AU! Customise characters profiles, their pages, their platforms, and more!" messageFontSize="text-xl" from="website"/>
                   </section>
               </section>
 
@@ -47,11 +47,11 @@ export default function Home() {
 
                   <div className = "flex flex-col gap-5">
                       <div className="flex flex-col gap-5 items-center">
-                          <h1 className="text-6xl">Social Media AU&#39;s</h1>
-                          <h1 className="text-6xl text-accent">Made Easy</h1>
+                          <h1 className="text-7xl">Social Media AU&#39;s</h1>
+                          <h1 className="text-7xl text-accent">Made Easy</h1>
                       </div>
 
-                      <h6 className="text-xl">The solution for those who just want to create, not build.</h6>
+                      <h6 className="text-2xl">The solution for those who just want to create, not build.</h6>
                   </div>
 
                   <div className="flex flex-row gap-5 bg-white p-2 rounded-xl items-center max-w-max">
@@ -61,8 +61,8 @@ export default function Home() {
               </section>
 
               <section className = "flex flex-col gap-5 w-1/4 h-1/3 pt-16">
-                  <MessageBubble message="Share" messageFontSize="text-lg" from="user"/>
-                  <MessageBubble message="Share your AU with others! Whether in the form of an image or html code, we got you." messageFontSize="text-lg" from="website"/>
+                  <MessageBubble message="Share" messageFontSize="text-xl" from="user"/>
+                  <MessageBubble message="Share your AU with others! Whether in the form of an image or html code, we got you." messageFontSize="text-xl" from="website"/>
               </section>
           </section>
       </div>

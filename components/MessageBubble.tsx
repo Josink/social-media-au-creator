@@ -8,7 +8,6 @@ type MessageBubbleProps = {
         | "text-5xl"| "text-6xl"| "text-7xl"| "text-8xl"| "text-9xl";
     from?: "website" | "user";
     textingDuration?: number;
-    scrollable?: boolean;
     maxHeight?: string;
 }
 
@@ -17,9 +16,7 @@ export default function MessageBubble({
                                           message,
                                           messageFontSize = "text-base",
                                           from = "website",
-                                          textingDuration = 0,
-                                          scrollable = false,
-                                          maxHeight}:
+                                          textingDuration = 0}:
     MessageBubbleProps){
 
     const [texting, setTexting] = useState(true);
@@ -37,15 +34,9 @@ export default function MessageBubble({
             <div className = {`flex flex-col px-4 py-2 rounded-2xl max-w-3/4 hover: ${
                 from === "website"
                     ? "bg-message rounded-bl-sm shadow shadow-shadow"
-                    : "bg-accentbg rounded-br-sm text-background shadow shadow-shadow"
+                    : "bg-accent rounded-br-sm text-background shadow shadow-shadow"
             }
-            ${
-                scrollable 
-                    ? "scrollbar-auto scrollbar-thumb-secondary scrollbar-track-accent/80 overflow-y-auto" 
-                    : ""
-            }`}
-                 style = {scrollable ? { maxHeight } : undefined}
-            >
+            `}>
                 {children ? (
                     children
                 ) : texting ? (

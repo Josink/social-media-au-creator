@@ -84,69 +84,70 @@ export default function Dashboard() {
         }
 
         loadDashboard();
-    }, []);
+    }, [supabase]);
 
     return(
         <div className = "flex h-full flex-1 flex-col gap-20 p-10">
             <MessageBubble message = {`Hello, ${username}!`} messageFontSize="text-xl" from = "website"/>
 
-            <MessageBubble from = "user" scrollable={ true} maxHeight="50dvh">
-                <h2 className="flex text-5xl p-10 self-center">
+            <div className = "flex flex-col ml-auto gap-10 bg-accent h-[75vh] w-3/4 rounded-2xl text-background">
+                <h2 className="flex flex-col text-5xl p-10 items-center">
                     Your AUs
                 </h2>
 
-                <div className="grid grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 p-10">
-                    <Link href="/AUs/New" className = "transition-transform duration-200 hover:translate-y-2">
-                        <div className="relative flex aspect-4/5 items-center justify-center">
-                            <img
-                                src="/images/phone.svg"
-                                alt="Create new AU"
-                                className="h-full w-full object-contain"
-                            />
+                <div className = "min-h-0 flex-1 overflow-y-auto rounded-b-2xl bg-background p-5 scrollbar-auto scrollbar-thumb-secondary scrollbar-track-accent/80">
+                        <div className="grid w-full rounded-xl grid-cols-[repeat(auto-fill,minmax(200px,1fr))] gap-5 p-10">
+                            <Link href="/AUs/New" className="transition-transform duration-200 hover:translate-y-2">
+                                <div className="relative flex aspect-4/5 items-center justify-center">
+                                    <img
+                                        src="/images/phone.svg"
+                                        alt="Create new AU"
+                                        className="h-full w-full object-contain"
+                                    />
 
-                            <FontAwesomeIcon
-                                icon={faPlus}
-                                className="absolute size-10 text-accent"
-                                size = "2xl"
-                            />
-                        </div>
-                    </Link>
-
-                    {aus.map((au) => (
-                        <Link
-                            key={au.id}
-                            href={`/AUs/${au.id}`}
-                        className = "transition-transform duration-200 hover:translate-y-2"
-                        onClick={() => recordLastVisited(au.id)}>
-
-                            <div className="relative flex aspect-4/5 justify-center">
-                                <img
-                                    src="/images/phone.svg"
-                                    alt="Create new AU"
-                                    className="h-full w-full object-contain"
-                                />
-
-                                <div className = "absolute flex flex-col items-center">
-                                    <p className = "mt-10 text-accent font-bold">{au.title}</p>
-
-                                    {au.description && (
-                                        <p>{au.description}</p>
-                                    )}
-
-                                    <p className = "text-xs">
-                                        {new Date(au.last_visited).toLocaleDateString("en-US", {
-                                            month: "long",
-                                            day: "numeric",
-                                        })}
-                                    </p>
+                                    <FontAwesomeIcon
+                                        icon={faPlus}
+                                        className="absolute size-10 text-accent"
+                                        size="2xl"
+                                    />
                                 </div>
+                            </Link>
 
-                            </div>
-                        </Link>
-                    ))}
+                            {aus.map((au) => (
+                                <Link
+                                    key={au.id}
+                                    href={`/AUs/${au.id}`}
+                                    className="transition-transform duration-200 hover:translate-y-2"
+                                    onClick={() => recordLastVisited(au.id)}>
+
+                                    <div className="relative flex aspect-4/5 justify-center">
+                                        <img
+                                            src="/images/phone.svg"
+                                            alt="Create new AU"
+                                            className="h-full w-full object-contain"
+                                        />
+
+                                        <div className="absolute flex flex-col items-center">
+                                            <p className="mt-10 text-accent font-bold">{au.title}</p>
+
+                                            {au.description && (
+                                                <p>{au.description}</p>
+                                            )}
+
+                                            <p className="text-xs">
+                                                {new Date(au.last_visited).toLocaleDateString("en-US", {
+                                                    month: "long",
+                                                    day: "numeric",
+                                                })}
+                                            </p>
+                                        </div>
+
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
                 </div>
-
-            </MessageBubble>
         </div>
     );
 }
