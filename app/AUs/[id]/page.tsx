@@ -37,7 +37,9 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
     const [characterDisplayName, setCharacterDisplayName] = useState("");
     const [characterUsername, setCharacterUsername] = useState("");
     const [characterDescription, setCharacterDescription] = useState("");
-    const [characterAvatarUrl, setCharacterAvatarUrl] = useState("");
+
+    const [avatarFile, setAvatarFile] = useState<File | null>(null);
+    const [avatarPreview, setAvatarPreview] = useState("");
 
     function openCharacterModal() {
         setShowCharacterModal(true);
@@ -59,7 +61,6 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
                 display_name: characterDisplayName.trim() || null,
                 username: characterUsername.trim() || null,
                 description: characterDescription.trim() || null,
-                avatar_url: characterAvatarUrl.trim() || null,
             })
             .select()
             .single()
@@ -75,7 +76,6 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
         setCharacterDisplayName("");
         setCharacterUsername("");
         setCharacterDescription("");
-        setCharacterAvatarUrl("");
 
         closeCharacterModal();
     }
@@ -180,45 +180,72 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
 
             {showCharacterModal && (
                 <div>
-                    <div className = "fixed inset-0 z-50 flex items-center justify-center ng-black/50 p-4" />
-                    <div className = "w-full max-w-lg rounded-2xl bg-white p-10 shadow-xl">
-                        <div className = "flex flex-col justify-center items-center gap-10">
+                    <div className = "fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" />
+                    <div className = "flex flex-col justify-center items-center gap-10 p-10 w-full max-w-lg rounded-2xl bg-white shadow-xl">
+                        <div className="flex flex-col gap-4">
+                            <Input
+                                type="text"
+                                placeholder="Character Name"
+                                value={characterName}
+                                onChange={(e) => setCharacterName(e.target.value)}
+                            />
 
-                            <div className = "flex flex-col gap-4">
-                                <Input
-                                    type="text"
-                                    placeholder="Character Name"
-                                    value={characterName}
-                                    onChange={(e) => setCharacterName(e.target.value)}
-                                />
-                                <Input
-                                    type="text"
-                                    placeholder="Character Display Name"
-                                    value={characterDisplayName}
-                                    onChange={(e) => setCharacterDisplayName(e.target.value)}
-                                />
-                                <Input
-                                    type="text"
-                                    placeholder="Character Username"
-                                    value={characterUsername}
-                                    onChange = {(e) => setCharacterUsername(e.target.value)}
-                                />
-                                <Input
-                                    type="text"
-                                    placeholder="Character Description"
-                                    value={characterDescription}
-                                    onChange={(e) => setCharacterDescription(e.target.value)}
-                                />
-                                <Input
-                                    type="text"
-                                    placeholder="Character Avatar URL"
-                                    value={characterAvatarUrl}
-                                    onChange={(e) => setCharacterAvatarUrl(e.target.value)}
-                                />
+                            <Input
+                                type="text"
+                                placeholder="Character Display Name"
+                                value={characterDisplayName}
+                                onChange={(e) => setCharacterDisplayName(e.target.value)}
+                            />
+
+                            <Input
+                                type="text"
+                                placeholder="Character Username"
+                                value={characterUsername}
+                                onChange={(e) => setCharacterUsername(e.target.value)}
+                            />
+
+                            <Input
+                                type="text"
+                                placeholder="Character Description"
+                                value={characterDescription}
+                                onChange={(e) => setCharacterDescription(e.target.value)}
+                            />
+
+                            <div className="flex flex-col gap-4">
+                                {avatarPreview && (
+                                    <img
+                                        src={avatarPreview}
+                                        alt="Character Profile Preview"
+                                        className="size-12 rounded-full object-cover"
+                                    />
+                                )}
+
+                                <label className="cursor-pointer rounded-lg bg-accent text-white">
+                                    Choose Character Avatar
+                                    <input
+                                        type="file"
+                                        placeholder="Character Avatar"
+                                        accept="image/png, image/jpeg, image/webp"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0] ?? null;
+
+                                            if (!file) return;
+
+                                            if (file.size > 5 * 1024 * 1024) {
+                                                alert("Avatar must be less than 5MB");
+                                                e.target.value = "";
+                                                return;
+                                            }
+
+                                            setAvatarFile(file);
+                                            setAvatarPreview(URL.createObjectURL(file));
+                                        }}
+                                    />
+                                </label>
                             </div>
-
-                            <Button text = "Add Character" onClick = {addCharacter}/>
                         </div>
+
+                        <Button text="Add Character" onClick={addCharacter}/>
                     </div>
                 </div>
             )}
