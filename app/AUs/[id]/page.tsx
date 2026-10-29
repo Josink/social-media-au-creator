@@ -1,12 +1,14 @@
 "use client"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus, faUser } from "@fortawesome/free-solid-svg-icons";
 
 import {createClient} from "@/lib/supabase/client";
 import {useEffect, useMemo, useState} from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import {error} from "next/dist/build/output/log";
+import Image from "next/image";
 
 type AU = {
     id: string;
@@ -23,6 +25,7 @@ type Character = {
     username: string | null;
     description: string | null;
     avatar_url: string | null;
+    avatarSignedUrl: string | null;
 };
 
 export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
@@ -53,6 +56,49 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
         if (!au || !characterName.trim()){
             return;
         }
+
+        //authenticate user
+        const {data: {user}, error: userError} = await supabase.auth.getUser();
+
+         if (userError || !user){
+             console.log("User error: ", userError?.message);
+             return;
+         }
+
+         //upload avatar
+        let avatarPath: string | null = null;
+
+         if (avatarFile){
+             const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
+
+             if (!allowedTypes.includes(avatarFile.type) || avatarFile.size > 5 * 1024 * 1024){
+                 console.error("Choose a supporter image less than 5MB");
+                 return;
+             }
+
+             const extensionByType: Record<string, string> = {
+                 "image/png": ".png",
+                 "image/jpeg": ".jpg",
+                 "image/webp": ".webp",
+             }
+
+             const filePath = `${user.id}/${au.id}/${crypto.randomUUID()}${extensionByType[avatarFile.type]}`;
+
+             const {data: uploadCharacterAvatarData, error: uploadCharacterAvatarError} =
+                 await supabase.storage.from("character-avatars").upload(filePath, avatarFile,{
+                 contentType: avatarFile.type,
+                 upsert: false,
+             });
+
+             if (uploadCharacterAvatarError){
+                 console.error("Upload character avatar error: ", uploadCharacterAvatarError.message);
+                 return;
+             }
+
+             avatarPath = uploadCharacterAvatarData.path;
+         }
+
+         //insert character into database
         const {data: characterData, error: characterInsertError} = await supabase
             .from("characters")
             .insert({
@@ -61,21 +107,49 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
                 display_name: characterDisplayName.trim() || null,
                 username: characterUsername.trim() || null,
                 description: characterDescription.trim() || null,
+                avatar_url: avatarPath,
             })
             .select()
             .single()
 
         if (characterInsertError){
-            console.log("Character insert error: ", characterInsertError.message);
+            console.error("Character insert error: ", characterInsertError.message);
+
+            if (avatarPath){
+                const {error: deleteAvatarError} = await supabase.storage
+                    .from("character-avatars")
+                    .remove([avatarPath]);
+
+                if (deleteAvatarError){
+                    console.error("Delete character avatar error: ", deleteAvatarError.message);
+                }
+            }
             return;
         }
 
-        setCharacters((previous) => [...previous, characterData]);
+        let avatarSignedUrl: string | null = null;
+
+        if (characterData.avatar_url){
+            const {data, error} = await supabase.storage
+                .from("character-avatars")
+                .createSignedUrl(characterData.avatar_url, 60 * 60)
+
+            if (error){
+                console.error("Failed to load avatar for character:", error.message);
+                return;
+            }
+
+            avatarSignedUrl = data.signedUrl;
+        }
+
+        setCharacters((previous) => [...previous, { ...characterData, avatarSignedUrl}]);
 
         setCharacterName("");
         setCharacterDisplayName("");
         setCharacterUsername("");
         setCharacterDescription("");
+        setAvatarFile(null);
+        setAvatarPreview("");
 
         closeCharacterModal();
     }
@@ -112,7 +186,36 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
             }
 
             setAu(auResult.data);
-            setCharacters(charactersResult.data);
+
+            const charactersWithUrls = await Promise.all(
+                charactersResult.data.map(async (character) => {
+                    if (!character.avatar_url) {
+                        return { ...character, avatarSignedUrl: null };
+                    }
+
+                    const { data, error } = await supabase.storage
+                        .from("character-avatars")
+                        .createSignedUrl(character.avatar_url, 60 * 60);
+
+                    if (error) {
+                        console.error(
+                            `Failed to load avatar for ${character.name}:`,
+                            error.message
+                        );
+
+                        return { ...character, avatarSignedUrl: null };
+                    }
+
+                    return {
+                        ...character,
+                        avatarSignedUrl: data.signedUrl,
+                    };
+                })
+            );
+
+            if (cancelled) return;
+
+            setCharacters(charactersWithUrls);
         }
 
         loadAU();
@@ -146,24 +249,25 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
                 {characters.map((character) => (
                     <div
                         key={character.id}
-                        className = "flex flex-col shrink-0 items-center snap-center w-56 h-64 gap-3 rounded-2xl border border-accent p-4"
+                        className = "box-border flex min-h-64 w-56 shrink-0 snap-center flex-col items-center gap-3 rounded-2xl border border-accent p-4"
                     >
-                        {character.avatar_url ? (
-                            <img
-                                src = {character.avatar_url}
-                                alt = {character.display_name ?? character.name}
-                                className = "size-24 rounded-full object-cover"
-                            />
+                        {character.avatarSignedUrl? (
+                            <Image
+                                src = {character.avatarSignedUrl!}
+                                alt = {character.display_name || character.name}
+                                className = "!size-24 !min-h-24 !min-w-24 shrink-0 aspect-square rounded-full object-cover"
+                                width = {100}
+                                height = {100}/>
                         ) : (
-                            <div className = "flex size-24 items-center justify-center rounded-full bg-accent">
+                            <div className = "flex size-24 items-center justify-center rounded-full">
                                 <FontAwesomeIcon
-                                    icon={faUserPlus}
+                                    icon={faUser}
                                     className = "size-8 text-accent"
                                     />
                             </div>
                         )}
 
-                        <h2 className = "text-xl font-bold">
+                        <h2 className = "max-w-full wrap-break-word text-center text-xl font-bold">
                             {character.display_name ?? character.name}
                         </h2>
 
