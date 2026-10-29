@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Sour_Gummy,  } from "next/font/google";
+import { Geist, Geist_Mono,} from "next/font/google";
 import "./globals.css";
 import NavBar from "@/components/NavBar";
 
@@ -13,12 +13,6 @@ const geistMono = Geist_Mono({
     subsets: ["latin"],
 });
 
-const sourGummy = Sour_Gummy({
-    weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-    variable: "--font-sour-gummy",
-    subsets: ["latin"],
-})
-
 export const metadata: Metadata = {
   title: "Social Media AU Creator",
   description: "A web app that handles all the formatting work for social media AUs",
@@ -31,7 +25,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistMono.variable} ${geistSans.variable} ${sourGummy.variable} flex min-h-screen flex-col`}>
+      <body className={`${geistMono.variable} ${geistSans.variable} flex min-h-screen flex-col`}>
       <NavBar />
       <main className = "flex flex-1 flex-col">
           {children}

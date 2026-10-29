@@ -7,7 +7,6 @@ import {createClient} from "@/lib/supabase/client";
 import {useEffect, useMemo, useState} from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
-import {error} from "next/dist/build/output/log";
 import Image from "next/image";
 
 type AU = {
@@ -226,12 +225,12 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
     },[params, supabase])
 
     return (
-        <div className = "min-h-0 w-full flex flex-1 flex-col gap-20 p-10">
+        <div className = "min-h-0 w-full flex flex-1 flex-col gap-20 p-10 overflow-hidden">
             <div className = "flex flex-col items-center">
                 <h1 className = "text-5xl">{au?.title}</h1>
             </div>
 
-            <div className = "flex flex-row gap-5 p-10 overflow-x-auto scroll-smooth snap-x snap-mandatory">
+            <div className = "flex flex-row self-center gap-5 p-10 w-4/5 min-w-0 max-w-full overflow-x-auto overscroll-contain-x scroll-smooth snap-x snap-mandatory">
                 <button
                     onClick = {openCharacterModal}
                     className = "flex flex-col shrink-0 snap-center items-center justify-center gap-3 w-56 h-64 rounded-2xl"
@@ -255,14 +254,14 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
                             <Image
                                 src = {character.avatarSignedUrl!}
                                 alt = {character.display_name || character.name}
-                                className = "!size-24 !min-h-24 !min-w-24 shrink-0 aspect-square rounded-full object-cover"
+                                className = "size-24! min-h-24! min-w-24! shrink-0 aspect-square rounded-full object-cover"
                                 width = {100}
                                 height = {100}/>
                         ) : (
                             <div className = "flex size-24 items-center justify-center rounded-full">
                                 <FontAwesomeIcon
                                     icon={faUser}
-                                    className = "size-8 text-accent"
+                                    className = "size-16 text-accent"
                                     />
                             </div>
                         )}
@@ -317,10 +316,12 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
 
                             <div className="flex flex-col gap-4">
                                 {avatarPreview && (
-                                    <img
-                                        src={avatarPreview}
-                                        alt="Character Profile Preview"
-                                        className="size-12 rounded-full object-cover"
+                                    <Image
+                                        src = {avatarPreview}
+                                        alt = "Character Profile Preview"
+                                        className = "size-12 rounded-full object-cover"
+                                        width = {100}
+                                        height = {100}
                                     />
                                 )}
 
