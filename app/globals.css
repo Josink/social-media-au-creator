@@ -13,10 +13,9 @@
 
     --color-message: #FBE1BC;
 
-    --font-sans: var(--font-geist-sans);
+    --font-geint-sans: "Geist Sans", sans-serif;
 }
 
 body {
-    @apply bg-background text-foreground;
-    font-family: var(--font-geist-sans);
+    @apply bg-background text-foreground font-geint-sans;
 }

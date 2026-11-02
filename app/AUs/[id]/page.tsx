@@ -7,6 +7,7 @@ import {createClient} from "@/lib/supabase/client";
 import {useEffect, useMemo, useState} from "react";
 import Input from "@/components/Input";
 import Button from "@/components/Button";
+import Modal from "@/components/Modal";
 import Image from "next/image";
 
 type AU = {
@@ -226,10 +227,12 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
 
     return (
         <div className = "min-h-0 w-full flex flex-1 flex-col gap-20 p-10 overflow-hidden">
+            {/*title*/}
             <div className = "flex flex-col items-center">
                 <h1 className = "text-5xl">{au?.title}</h1>
             </div>
 
+            {/*character carousel*/}
             <div className = "flex flex-row self-center gap-5 p-10 w-4/5 min-w-0 max-w-full overflow-x-auto overscroll-contain-x scroll-smooth snap-x snap-mandatory">
                 <button
                     onClick = {openCharacterModal}
@@ -237,7 +240,7 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
                 >
                     <FontAwesomeIcon
                         icon={faUserPlus}
-                        className="size-10 text-accent"
+                        className="text-accent"
                         size="2xl"/>
 
                     <span className="font-semibold">
@@ -256,13 +259,14 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
                                 alt = {character.display_name || character.name}
                                 className = "size-24! min-h-24! min-w-24! shrink-0 aspect-square rounded-full object-cover"
                                 width = {100}
-                                height = {100}/>
+                                height = {100}
+                                loading = "eager"/>
                         ) : (
                             <div className = "flex size-24 items-center justify-center rounded-full">
                                 <FontAwesomeIcon
                                     icon={faUser}
-                                    className = "size-16 text-accent"
-                                    />
+                                    className = "text-accent"
+                                    size="2xl"/>
                             </div>
                         )}
 
@@ -281,79 +285,80 @@ export default function AUPage({params,}: { params: Promise<{ id: string }> }) {
                 ))}
             </div>
 
+            {/*character creator modal*/}
             {showCharacterModal && (
-                <div>
-                    <div className = "fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4" />
-                    <div className = "flex flex-col justify-center items-center gap-10 p-10 w-full max-w-lg rounded-2xl bg-white shadow-xl">
+                <Modal title="Add Character" onCloseAction={closeCharacterModal}>
+                    <div className="flex flex-col gap-4">
+                        <Input
+                            type="text"
+                            placeholder="Character Name"
+                            value={characterName}
+                            onChange={(e) => setCharacterName(e.target.value)}
+                        />
+
+                        <Input
+                            type="text"
+                            placeholder="Character Display Name"
+                            value={characterDisplayName}
+                            onChange={(e) => setCharacterDisplayName(e.target.value)}
+                        />
+
+                        <Input
+                            type="text"
+                            placeholder="Character Username"
+                            value={characterUsername}
+                            onChange={(e) => setCharacterUsername(e.target.value)}
+                        />
+
+                        <Input
+                            type="text"
+                            placeholder="Character Description"
+                            value={characterDescription}
+                            onChange={(e) => setCharacterDescription(e.target.value)}
+                        />
+
                         <div className="flex flex-col gap-4">
-                            <Input
-                                type="text"
-                                placeholder="Character Name"
-                                value={characterName}
-                                onChange={(e) => setCharacterName(e.target.value)}
-                            />
+                            {avatarPreview && (
+                                <Image
+                                    src={avatarPreview}
+                                    alt="Character Profile Preview"
+                                    className="size-12 rounded-full object-cover"
+                                    width={100}
+                                    height={100}
+                                />
+                            )}
 
-                            <Input
-                                type="text"
-                                placeholder="Character Display Name"
-                                value={characterDisplayName}
-                                onChange={(e) => setCharacterDisplayName(e.target.value)}
-                            />
+                            <label className="cursor-pointer rounded-lg bg-accent text-white">
+                                Choose Character Avatar
+                                <input
+                                    type="file"
+                                    placeholder="Character Avatar"
+                                    accept="image/png, image/jpeg, image/webp"
+                                    onChange={(e) => {
+                                        const file = e.target.files?.[0] ?? null;
 
-                            <Input
-                                type="text"
-                                placeholder="Character Username"
-                                value={characterUsername}
-                                onChange={(e) => setCharacterUsername(e.target.value)}
-                            />
+                                        if (!file) return;
 
-                            <Input
-                                type="text"
-                                placeholder="Character Description"
-                                value={characterDescription}
-                                onChange={(e) => setCharacterDescription(e.target.value)}
-                            />
+                                        if (file.size > 5 * 1024 * 1024) {
+                                            alert("Avatar must be less than 5MB");
+                                            e.target.value = "";
+                                            return;
+                                        }
 
-                            <div className="flex flex-col gap-4">
-                                {avatarPreview && (
-                                    <Image
-                                        src = {avatarPreview}
-                                        alt = "Character Profile Preview"
-                                        className = "size-12 rounded-full object-cover"
-                                        width = {100}
-                                        height = {100}
-                                    />
-                                )}
-
-                                <label className="cursor-pointer rounded-lg bg-accent text-white">
-                                    Choose Character Avatar
-                                    <input
-                                        type="file"
-                                        placeholder="Character Avatar"
-                                        accept="image/png, image/jpeg, image/webp"
-                                        onChange={(e) => {
-                                            const file = e.target.files?.[0] ?? null;
-
-                                            if (!file) return;
-
-                                            if (file.size > 5 * 1024 * 1024) {
-                                                alert("Avatar must be less than 5MB");
-                                                e.target.value = "";
-                                                return;
-                                            }
-
-                                            setAvatarFile(file);
-                                            setAvatarPreview(URL.createObjectURL(file));
-                                        }}
-                                    />
-                                </label>
-                            </div>
+                                        setAvatarFile(file);
+                                        setAvatarPreview(URL.createObjectURL(file));
+                                    }}
+                                />
+                            </label>
                         </div>
-
-                        <Button text="Add Character" onClick={addCharacter}/>
                     </div>
-                </div>
+
+                    <Button text="Add Character" onClick={addCharacter}/>
+                </Modal>
             )}
+
+            {/*Platforms*/}
+
         </div>
     );
 }
